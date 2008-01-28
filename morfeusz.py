@@ -1,0 +1,108 @@
+# encoding=UTF-8
+
+# Copyright © 2007, 2008 Jakub Wilk <ubanus@users.sf.net>
+
+from __future__ import with_statement
+
+from collections import defaultdict
+from thread import allocate_lock
+import ctypes
+from ctypes import c_int, c_char_p
+
+
+__all__ = ['analyse']
+
+libmorfeusz = ctypes.CDLL('libmorfeusz.so.0')
+
+MORFOPT_ENCODING = 1
+MORFEUSZ_UTF_8 = 8
+
+libmorfeusz.morfeusz_set_option(MORFOPT_ENCODING, MORFEUSZ_UTF_8)
+libmorfeusz_lock = allocate_lock()
+
+class InterpEdge(ctypes.Structure):
+	_fields_ = \
+	(
+		('i', c_int),
+		('j', c_int),
+		('_orth', c_char_p),
+		('_base', c_char_p),
+		('tags', c_char_p)
+	)
+
+	@property
+	def orth(self):
+		if self._orth is not None:
+			return self._orth.decode('UTF-8')
+
+	@property
+	def base(self):
+		if self._base is not None:
+			return self._base.decode('UTF-8')
+
+libmorfeusz_analyse = libmorfeusz.morfeusz_analyse
+libmorfeusz_analyse.restype = ctypes.POINTER(InterpEdge)
+
+def expand_tags(tags):
+	r'''
+	>>> list(expand_tags('foo:bar.baz:quux|dunno:why'))
+	['foo:bar:quux', 'foo:baz:quux', 'dunno:why']
+	'''
+
+	if tags is None:
+		yield
+		return
+
+	for chunks in tags.split('|'):
+		chunks = [chunk.split('.') for chunk in chunks.split(':')]
+
+		def expand_chunks(i):
+			if i >= len(chunks):
+				yield ()
+			else:
+				tail = tuple(expand_chunks(i + 1))
+				for chunk_variant in chunks[i]:
+					for tail_variant in tail:
+						yield (chunk_variant,) + tail_variant
+
+		for x in expand_chunks(0):
+			yield ':'.join(x)
+
+def analyse(s):
+	r'''
+	>>> from pprint import pprint
+	>>> pprint(analyse('Mama ma.'))
+	[((u'Mama', u'mama', 'subst:sg:nom:f'),
+	  (u'ma', u'mie\u0107', 'fin:sg:ter:imperf'),
+	  (u'.', u'.', 'interp')),
+	 ((u'Mama', u'mama', 'subst:sg:nom:f'),
+	  (u'ma', u'm\xf3j', 'adj:sg:nom:f:pos'),
+	  (u'.', u'.', 'interp'))]
+	'''
+
+	s = unicode(s)
+	s = s.encode('UTF-8')
+	dag = defaultdict(list)
+	with libmorfeusz_lock:
+		for edge in libmorfeusz_analyse(s):
+			if edge.i == -1:
+				break
+			for tag in expand_tags(edge.tags):
+				dag[edge.i] += ((edge.orth, edge.base, tag), edge.j),
+
+	def expand_dag(i):
+		nexts = dag[i]
+		if not nexts:
+			yield ()
+		else:
+			for head, j in nexts:
+				for tail in expand_dag(j):
+					yield (head,) + tail
+
+	return list(expand_dag(0))
+
+if __name__ == '__main__':
+	import doctest
+	doctest.testmod()
+
+# vim:ts=4 sw=4 noet
