@@ -121,7 +121,6 @@ def expand_tags(tags, expand_dot = True, expand_underscore = True):
 	>>> pprint(list(xtags))
 	['adj:sg:nom:m1.m2.m3:pos', 'adj:sg:acc:m3:pos']
 
-
 	>>> tags = 'ppron3:sg:acc:f:ter:_:npraep'
 	>>> xtags = expand_tags(tags)
 	>>> pprint(list(xtags))
