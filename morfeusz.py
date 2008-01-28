@@ -5,12 +5,13 @@
 from __future__ import with_statement
 
 from collections import defaultdict
+from itertools import izip
 from thread import allocate_lock
 import ctypes
 from ctypes import c_int, c_char_p
 
 
-__all__ = ['analyse', 'ATTRIBUTES', 'VALUES']
+__all__ = ['analyse', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
 subst=number case gender
@@ -105,18 +106,42 @@ class InterpEdge(ctypes.Structure):
 libmorfeusz_analyse = libmorfeusz.morfeusz_analyse
 libmorfeusz_analyse.restype = ctypes.POINTER(InterpEdge)
 
-def expand_tags(tags):
+def expand_tags(tags, expand_underscore = True):
 	r'''
-	>>> list(expand_tags('foo:bar.baz:quux|dunno:why'))
-	['foo:bar:quux', 'foo:baz:quux', 'dunno:why']
+	>>> from pprint import pprint
+
+	>>> tags = expand_tags('adj:sg:inst.loc:m1.m2.m3:pos')
+	>>> pprint(list(tags))
+	['adj:sg:inst:m1:pos',
+	 'adj:sg:inst:m2:pos',
+	 'adj:sg:inst:m3:pos',
+	 'adj:sg:loc:m1:pos',
+	 'adj:sg:loc:m2:pos',
+	 'adj:sg:loc:m3:pos']
+
+	>>> tags = expand_tags('ppron3:sg:acc:f:ter:_:npraep')
+	>>> pprint(list(tags))
+	['ppron3:sg:acc:f:ter:akc:npraep', 'ppron3:sg:acc:f:ter:nakc:npraep']
+
+	>>> tags = expand_tags('ppron3:sg:acc:f:ter:_:npraep', expand_underscore = False)
+	>>> pprint(list(tags))
+	['ppron3:sg:acc:f:ter:_:npraep']
 	'''
 
 	if tags is None:
 		yield
 		return
 
-	for chunks in tags.split('|'):
-		chunks = [chunk.split('.') for chunk in chunks.split(':')]
+	for tag in tags.split('|'):
+		tag = tag.split(':')
+		pos = tag.pop(0)
+		chunks = [(pos,)]
+		chunks += \
+		(
+			VALUES[attribute] if chunk == '_' and expand_underscore
+			else chunk.split('.')
+			for chunk, attribute in izip(tag, ATTRIBUTES[pos])
+		)
 
 		def expand_chunks(i):
 			if i >= len(chunks):
