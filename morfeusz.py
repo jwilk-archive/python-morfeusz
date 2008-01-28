@@ -106,25 +106,31 @@ class InterpEdge(ctypes.Structure):
 libmorfeusz_analyse = libmorfeusz.morfeusz_analyse
 libmorfeusz_analyse.restype = ctypes.POINTER(InterpEdge)
 
-def expand_tags(tags, expand_underscore = True):
+def expand_tags(tags, expand_dot = True, expand_underscore = True):
 	r'''
 	>>> from pprint import pprint
 
-	>>> tags = expand_tags('adj:sg:inst.loc:m1.m2.m3:pos')
-	>>> pprint(list(tags))
-	['adj:sg:inst:m1:pos',
-	 'adj:sg:inst:m2:pos',
-	 'adj:sg:inst:m3:pos',
-	 'adj:sg:loc:m1:pos',
-	 'adj:sg:loc:m2:pos',
-	 'adj:sg:loc:m3:pos']
+	>>> tags = 'adj:sg:nom:m1.m2.m3:pos|adj:sg:acc:m3:pos'
+	>>> xtags = expand_tags(tags)
+	>>> pprint(list(xtags))
+	['adj:sg:nom:m1:pos',
+	 'adj:sg:nom:m2:pos',
+	 'adj:sg:nom:m3:pos',
+	 'adj:sg:acc:m3:pos']
+	>>> xtags = expand_tags(tags, expand_dot=False)
+	>>> pprint(list(xtags))
+	['adj:sg:nom:m1.m2.m3:pos', 'adj:sg:acc:m3:pos']
 
-	>>> tags = expand_tags('ppron3:sg:acc:f:ter:_:npraep')
-	>>> pprint(list(tags))
+
+	>>> tags = 'ppron3:sg:acc:f:ter:_:npraep'
+	>>> xtags = expand_tags(tags)
+	>>> pprint(list(xtags))
 	['ppron3:sg:acc:f:ter:akc:npraep', 'ppron3:sg:acc:f:ter:nakc:npraep']
-
-	>>> tags = expand_tags('ppron3:sg:acc:f:ter:_:npraep', expand_underscore = False)
-	>>> pprint(list(tags))
+	>>> xtags = expand_tags(tags, expand_dot = False)
+	>>> pprint(list(xtags))
+	['ppron3:sg:acc:f:ter:akc.nakc:npraep']
+	>>> xtags = expand_tags(tags, expand_underscore = False)
+	>>> pprint(list(xtags))
 	['ppron3:sg:acc:f:ter:_:npraep']
 	'''
 
@@ -142,6 +148,10 @@ def expand_tags(tags, expand_underscore = True):
 			else chunk.split('.')
 			for chunk, attribute in izip(tag, ATTRIBUTES[pos])
 		)
+
+		if not expand_dot:
+			yield ':'.join('.'.join(values) for values in chunks)
+			continue
 
 		def expand_chunks(i):
 			if i >= len(chunks):
