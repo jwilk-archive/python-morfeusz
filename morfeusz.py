@@ -164,7 +164,12 @@ def expand_tags(tags, expand_dot = True, expand_underscore = True):
 		for x in expand_chunks(0):
 			yield ':'.join(x)
 
-def analyse(s):
+_expand_tags = expand_tags
+
+def _dont_expand_tags(s, **kwargs):
+	return (s,)
+
+def analyse(s, expand_tags = True, expand_dot = True, expand_underscore = True):
 	r'''
 	>>> from pprint import pprint
 	>>> pprint(analyse('Mama ma.'))
@@ -176,6 +181,7 @@ def analyse(s):
 	  (u'.', u'.', 'interp'))]
 	'''
 
+	expand_tags = _expand_tags if expand_tags else _dont_expand_tags
 	s = unicode(s)
 	s = s.encode('UTF-8')
 	dag = defaultdict(list)
@@ -183,7 +189,7 @@ def analyse(s):
 		for edge in libmorfeusz_analyse(s):
 			if edge.i == -1:
 				break
-			for tag in expand_tags(edge.tags):
+			for tag in expand_tags(edge.tags, expand_dot = expand_dot, expand_underscore = expand_underscore):
 				dag[edge.i] += ((edge.orth, edge.base, tag), edge.j),
 
 	def expand_dag(i):
