@@ -24,7 +24,7 @@ import ctypes
 from ctypes import c_int, c_char_p
 
 __author__ = 'Jakub Wilk <ubanus@users.sf.net>'
-__version__ = '0.2367'
+__version__ = '0.2368'
 __all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
@@ -185,8 +185,10 @@ _expand_tags = expand_tags
 def _dont_expand_tags(s, **kwargs):
 	return (s,)
 
-def analyse(s, expand_tags = True, expand_dot = True, expand_underscore = True):
+def analyse(text, expand_tags = True, expand_dot = True, expand_underscore = True):
 	r'''
+	Analyse the text.
+
 	>>> from pprint import pprint
 	>>> pprint(analyse('Mama ma.'))
 	[((u'Mama', u'mama', 'subst:sg:nom:f'),
@@ -198,11 +200,11 @@ def analyse(s, expand_tags = True, expand_dot = True, expand_underscore = True):
 	'''
 
 	expand_tags = _expand_tags if expand_tags else _dont_expand_tags
-	s = unicode(s)
-	s = s.encode('UTF-8')
+	text = unicode(text)
+	text = text.encode('UTF-8')
 	dag = defaultdict(list)
 	with libmorfeusz_lock:
-		for edge in libmorfeusz_analyse(s):
+		for edge in libmorfeusz_analyse(text):
 			if edge.i == -1:
 				break
 			for tag in expand_tags(edge.tags, expand_dot = expand_dot, expand_underscore = expand_underscore):
@@ -220,6 +222,10 @@ def analyse(s, expand_tags = True, expand_dot = True, expand_underscore = True):
 	return list(expand_dag(0))
 
 def about():
+	'''
+	Return a string containing information on authors and version of the
+	underlying library.
+	'''
 	return libmorfeusz_about().decode('ISO-8859-2')
 
 if __name__ == '__main__':
