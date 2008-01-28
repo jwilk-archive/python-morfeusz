@@ -24,7 +24,7 @@ import ctypes
 from ctypes import c_int, c_char_p
 
 __author__ = 'Jakub Wilk <ubanus@users.sf.net>'
-__version__ = '0.2368'
+__version__ = '0.2369'
 __all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
@@ -152,7 +152,7 @@ def expand_tags(tags, expand_dot = True, expand_underscore = True):
 	if tags is None:
 		yield
 		return
-
+	tags = str(tags)
 	for tag in tags.split('|'):
 		tag = tag.split(':')
 		pos = tag.pop(0)
