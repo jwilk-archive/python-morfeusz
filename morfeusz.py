@@ -10,7 +10,69 @@ import ctypes
 from ctypes import c_int, c_char_p
 
 
-__all__ = ['analyse']
+__all__ = ['analyse', 'ATTRIBUTES', 'VALUES']
+
+ATTRIBUTES = '''
+subst=number case gender
+depr=number case gender
+adj=number case gender degree
+adja=
+adjp=
+adv=degree
+num=number case gender accommodability
+ppron12=number case gender person accentability
+ppron3=number case gender person accentability post_prepositionality
+siebie=case
+fin=number person aspect
+bedzie=number person aspect
+aglt=number person aspect vocalicity
+praet=number gender aspect agglutination
+impt=number person aspect
+imps=aspect
+inf=aspect
+pcon=aspect
+pant=aspect
+ger=number case gender aspect negation
+pact=number case gender aspect negation
+ppas=number case gender aspect negation
+winien=number gender aspect
+pred=
+prep=case vocalicity
+conj=
+qub=vocalicity
+xxs=number case gender
+xxx=
+interp=
+ign=
+'''
+ATTRIBUTES = \
+dict(
+	(key, tuple(values.split()))
+	for line in ATTRIBUTES.splitlines() if line
+	for (key, values) in (line.split('=', 1),)
+)
+
+VALUES = '''
+number=sg pl
+case=nom gen dat acc inst loc voc
+gender=m1 m2 m3 f n1 n2 p1 p2 p3
+person=pri sec ter
+degree=pos comp sup
+aspect=imperf perf
+negation=aff neg
+accentability=akc nakc
+post_prepositionality=npraep praep
+accommodability=congr rec
+agglutination=agl nagl
+vocalicity=nwok wok
+'''
+VALUES = \
+dict(
+	(key, tuple(values.split()))
+	for line in VALUES.splitlines() if line
+	for (key, values) in (line.split('=', 1),)
+)
+
 
 libmorfeusz = ctypes.CDLL('libmorfeusz.so.0')
 
