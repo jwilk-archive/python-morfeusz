@@ -24,8 +24,8 @@ import ctypes
 from ctypes import c_int, c_char_p
 
 __author__ = 'Jakub Wilk <ubanus@users.sf.net>'
-__version__ = '0.2366'
-__all__ = ['analyse', 'expand_tags', 'ATTRIBUTES', 'VALUES']
+__version__ = '0.2367'
+__all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
 subst=number case gender
@@ -119,6 +119,8 @@ class InterpEdge(ctypes.Structure):
 
 libmorfeusz_analyse = libmorfeusz.morfeusz_analyse
 libmorfeusz_analyse.restype = ctypes.POINTER(InterpEdge)
+libmorfeusz_about = libmorfeusz.morfeusz_about
+libmorfeusz_about.restype = c_char_p
 
 def expand_tags(tags, expand_dot = True, expand_underscore = True):
 	r'''
@@ -216,6 +218,9 @@ def analyse(s, expand_tags = True, expand_dot = True, expand_underscore = True):
 					yield (head,) + tail
 
 	return list(expand_dag(0))
+
+def about():
+	return libmorfeusz_about().decode('ISO-8859-2')
 
 if __name__ == '__main__':
 	import doctest
