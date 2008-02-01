@@ -10,6 +10,26 @@
 # WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
 # for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, see <http://www.gnu.org/licenses>.
+# 
+# Linking python-morfeusz with other modules is making a combined work based on
+# python-morfeusz. Thus, the terms and conditions of the GNU General Public
+# License cover the whole combination.
+#
+# In addition, as a special exception, the copyright holder of python-morfeusz
+# give you permission to combine python-morfeusz with the Morfeusz SIAT
+# morphological analyser <http://nlp.ipipan.waw.pl/~wolinski/morfeusz/>. You
+# may copy and distribute such a system following the terms of the GNU GPL for
+# python-morfeusz and the license of Morfeusz SIAT.
+#
+# Note that people who make modified versions of python-morfeusz are not
+# obligated to grant this special exception for their modified versions; it is
+# their choice whether to do so. The GNU General Public License gives
+# permission to release a modified version without this exception; this
+# exception also makes it possible to release a modified version which carries
+# forward this exception.
 
 '''
 Python bindings to Morfeusz.
@@ -24,7 +44,7 @@ import ctypes
 from ctypes import c_int, c_char_p
 
 __author__ = 'Jakub Wilk <ubanus@users.sf.net>'
-__version__ = '0.2369'
+__version__ = '0.2403'
 __all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
