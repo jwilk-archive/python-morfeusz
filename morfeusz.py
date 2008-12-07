@@ -82,9 +82,9 @@ ign=
 '''
 ATTRIBUTES = \
 dict(
-	(key, tuple(values.split()))
-	for line in ATTRIBUTES.splitlines() if line
-	for (key, values) in (line.split('=', 1),)
+    (key, tuple(values.split()))
+    for line in ATTRIBUTES.splitlines() if line
+    for (key, values) in (line.split('=', 1),)
 )
 
 VALUES = '''
@@ -103,9 +103,9 @@ vocalicity=nwok wok
 '''
 VALUES = \
 dict(
-	(key, tuple(values.split()))
-	for line in VALUES.splitlines() if line
-	for (key, values) in (line.split('=', 1),)
+    (key, tuple(values.split()))
+    for line in VALUES.splitlines() if line
+    for (key, values) in (line.split('=', 1),)
 )
 
 
@@ -118,24 +118,24 @@ libmorfeusz.morfeusz_set_option(MORFOPT_ENCODING, MORFEUSZ_UTF_8)
 libmorfeusz_lock = allocate_lock()
 
 class InterpEdge(ctypes.Structure):
-	_fields_ = \
-	(
-		('i', c_int),
-		('j', c_int),
-		('_orth', c_char_p),
-		('_base', c_char_p),
-		('tags', c_char_p)
-	)
+    _fields_ = \
+    (
+        ('i', c_int),
+        ('j', c_int),
+        ('_orth', c_char_p),
+        ('_base', c_char_p),
+        ('tags', c_char_p)
+    )
 
-	@property
-	def orth(self):
-		if self._orth is not None:
-			return self._orth.decode('UTF-8')
+    @property
+    def orth(self):
+        if self._orth is not None:
+            return self._orth.decode('UTF-8')
 
-	@property
-	def base(self):
-		if self._base is not None:
-			return self._base.decode('UTF-8')
+    @property
+    def base(self):
+        if self._base is not None:
+            return self._base.decode('UTF-8')
 
 libmorfeusz_analyse = libmorfeusz.morfeusz_analyse
 libmorfeusz_analyse.restype = ctypes.POINTER(InterpEdge)
@@ -143,113 +143,113 @@ libmorfeusz_about = libmorfeusz.morfeusz_about
 libmorfeusz_about.restype = c_char_p
 
 def expand_tags(tags, expand_dot = True, expand_underscore = True):
-	r'''
-	>>> from pprint import pprint
+    r'''
+    >>> from pprint import pprint
 
-	>>> tags = 'adj:sg:nom:m1.m2.m3:pos|adj:sg:acc:m3:pos'
-	>>> xtags = expand_tags(tags)
-	>>> pprint(list(xtags))
-	['adj:sg:nom:m1:pos',
-	 'adj:sg:nom:m2:pos',
-	 'adj:sg:nom:m3:pos',
-	 'adj:sg:acc:m3:pos']
-	>>> xtags = expand_tags(tags, expand_dot=False)
-	>>> pprint(list(xtags))
-	['adj:sg:nom:m1.m2.m3:pos', 'adj:sg:acc:m3:pos']
+    >>> tags = 'adj:sg:nom:m1.m2.m3:pos|adj:sg:acc:m3:pos'
+    >>> xtags = expand_tags(tags)
+    >>> pprint(list(xtags))
+    ['adj:sg:nom:m1:pos',
+     'adj:sg:nom:m2:pos',
+     'adj:sg:nom:m3:pos',
+     'adj:sg:acc:m3:pos']
+    >>> xtags = expand_tags(tags, expand_dot=False)
+    >>> pprint(list(xtags))
+    ['adj:sg:nom:m1.m2.m3:pos', 'adj:sg:acc:m3:pos']
 
-	>>> tags = 'ppron3:sg:acc:f:ter:_:npraep'
-	>>> xtags = expand_tags(tags)
-	>>> pprint(list(xtags))
-	['ppron3:sg:acc:f:ter:akc:npraep', 'ppron3:sg:acc:f:ter:nakc:npraep']
-	>>> xtags = expand_tags(tags, expand_dot = False)
-	>>> pprint(list(xtags))
-	['ppron3:sg:acc:f:ter:akc.nakc:npraep']
-	>>> xtags = expand_tags(tags, expand_underscore = False)
-	>>> pprint(list(xtags))
-	['ppron3:sg:acc:f:ter:_:npraep']
-	'''
+    >>> tags = 'ppron3:sg:acc:f:ter:_:npraep'
+    >>> xtags = expand_tags(tags)
+    >>> pprint(list(xtags))
+    ['ppron3:sg:acc:f:ter:akc:npraep', 'ppron3:sg:acc:f:ter:nakc:npraep']
+    >>> xtags = expand_tags(tags, expand_dot = False)
+    >>> pprint(list(xtags))
+    ['ppron3:sg:acc:f:ter:akc.nakc:npraep']
+    >>> xtags = expand_tags(tags, expand_underscore = False)
+    >>> pprint(list(xtags))
+    ['ppron3:sg:acc:f:ter:_:npraep']
+    '''
 
-	if tags is None:
-		yield
-		return
-	tags = str(tags)
-	for tag in tags.split('|'):
-		tag = tag.split(':')
-		pos = tag.pop(0)
-		chunks = [(pos,)]
-		chunks += \
-		(
-			VALUES[attribute] if chunk == '_' and expand_underscore
-			else chunk.split('.')
-			for chunk, attribute in izip(tag, ATTRIBUTES[pos])
-		)
+    if tags is None:
+        yield
+        return
+    tags = str(tags)
+    for tag in tags.split('|'):
+        tag = tag.split(':')
+        pos = tag.pop(0)
+        chunks = [(pos,)]
+        chunks += \
+        (
+            VALUES[attribute] if chunk == '_' and expand_underscore
+            else chunk.split('.')
+            for chunk, attribute in izip(tag, ATTRIBUTES[pos])
+        )
 
-		if not expand_dot:
-			yield ':'.join('.'.join(values) for values in chunks)
-			continue
+        if not expand_dot:
+            yield ':'.join('.'.join(values) for values in chunks)
+            continue
 
-		def expand_chunks(i):
-			if i >= len(chunks):
-				yield ()
-			else:
-				tail = tuple(expand_chunks(i + 1))
-				for chunk_variant in chunks[i]:
-					for tail_variant in tail:
-						yield (chunk_variant,) + tail_variant
+        def expand_chunks(i):
+            if i >= len(chunks):
+                yield ()
+            else:
+                tail = tuple(expand_chunks(i + 1))
+                for chunk_variant in chunks[i]:
+                    for tail_variant in tail:
+                        yield (chunk_variant,) + tail_variant
 
-		for x in expand_chunks(0):
-			yield ':'.join(x)
+        for x in expand_chunks(0):
+            yield ':'.join(x)
 
 _expand_tags = expand_tags
 
 def _dont_expand_tags(s, **kwargs):
-	return (s,)
+    return (s,)
 
 def analyse(text, expand_tags = True, expand_dot = True, expand_underscore = True):
-	r'''
-	Analyse the text.
+    r'''
+    Analyse the text.
 
-	>>> from pprint import pprint
-	>>> pprint(analyse('Mama ma.'))
-	[((u'Mama', u'mama', 'subst:sg:nom:f'),
-	  (u'ma', u'mie\u0107', 'fin:sg:ter:imperf'),
-	  (u'.', u'.', 'interp')),
-	 ((u'Mama', u'mama', 'subst:sg:nom:f'),
-	  (u'ma', u'm\xf3j', 'adj:sg:nom:f:pos'),
-	  (u'.', u'.', 'interp'))]
-	'''
+    >>> from pprint import pprint
+    >>> pprint(analyse('Mama ma.'))
+    [((u'Mama', u'mama', 'subst:sg:nom:f'),
+      (u'ma', u'mie\u0107', 'fin:sg:ter:imperf'),
+      (u'.', u'.', 'interp')),
+     ((u'Mama', u'mama', 'subst:sg:nom:f'),
+      (u'ma', u'm\xf3j', 'adj:sg:nom:f:pos'),
+      (u'.', u'.', 'interp'))]
+    '''
 
-	expand_tags = _expand_tags if expand_tags else _dont_expand_tags
-	text = unicode(text)
-	text = text.encode('UTF-8')
-	dag = defaultdict(list)
-	with libmorfeusz_lock:
-		for edge in libmorfeusz_analyse(text):
-			if edge.i == -1:
-				break
-			for tag in expand_tags(edge.tags, expand_dot = expand_dot, expand_underscore = expand_underscore):
-				dag[edge.i] += ((edge.orth, edge.base, tag), edge.j),
+    expand_tags = _expand_tags if expand_tags else _dont_expand_tags
+    text = unicode(text)
+    text = text.encode('UTF-8')
+    dag = defaultdict(list)
+    with libmorfeusz_lock:
+        for edge in libmorfeusz_analyse(text):
+            if edge.i == -1:
+                break
+            for tag in expand_tags(edge.tags, expand_dot = expand_dot, expand_underscore = expand_underscore):
+                dag[edge.i] += ((edge.orth, edge.base, tag), edge.j),
 
-	def expand_dag(i):
-		nexts = dag[i]
-		if not nexts:
-			yield ()
-		else:
-			for head, j in nexts:
-				for tail in expand_dag(j):
-					yield (head,) + tail
+    def expand_dag(i):
+        nexts = dag[i]
+        if not nexts:
+            yield ()
+        else:
+            for head, j in nexts:
+                for tail in expand_dag(j):
+                    yield (head,) + tail
 
-	return list(expand_dag(0))
+    return list(expand_dag(0))
 
 def about():
-	'''
-	Return a string containing information on authors and version of the
-	underlying library.
-	'''
-	return libmorfeusz_about().decode('ISO-8859-2')
+    '''
+    Return a string containing information on authors and version of the
+    underlying library.
+    '''
+    return libmorfeusz_about().decode('ISO-8859-2')
 
 if __name__ == '__main__':
-	import doctest
-	doctest.testmod()
+    import doctest
+    doctest.testmod()
 
-# vim:ts=4 sw=4 noet
+# vim:ts=4 sw=4 et
