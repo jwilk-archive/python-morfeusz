@@ -41,7 +41,7 @@ import ctypes
 from ctypes import c_int, c_char_p
 
 __author__ = 'Jakub Wilk <ubanus@users.sf.net>'
-__version__ = '0.2403'
+__version__ = '0.2403.py3k'
 __all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
