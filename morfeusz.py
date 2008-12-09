@@ -35,11 +35,8 @@
 Python bindings to Morfeusz.
 '''
 
-from __future__ import with_statement
-
 from collections import defaultdict
-from itertools import izip
-from thread import allocate_lock
+from _thread import allocate_lock
 import ctypes
 from ctypes import c_int, c_char_p
 
@@ -108,7 +105,6 @@ dict(
     for (key, values) in (line.split('=', 1),)
 )
 
-
 libmorfeusz = ctypes.CDLL('libmorfeusz.so.0')
 
 MORFOPT_ENCODING = 1
@@ -130,12 +126,12 @@ class InterpEdge(ctypes.Structure):
     @property
     def orth(self):
         if self._orth is not None:
-            return self._orth.decode('UTF-8')
+            return self._orth
 
     @property
     def base(self):
         if self._base is not None:
-            return self._base.decode('UTF-8')
+            return self._base
 
 libmorfeusz_analyse = libmorfeusz.morfeusz_analyse
 libmorfeusz_analyse.restype = ctypes.POINTER(InterpEdge)
@@ -181,7 +177,7 @@ def expand_tags(tags, expand_dot = True, expand_underscore = True):
         (
             VALUES[attribute] if chunk == '_' and expand_underscore
             else chunk.split('.')
-            for chunk, attribute in izip(tag, ATTRIBUTES[pos])
+            for chunk, attribute in zip(tag, ATTRIBUTES[pos])
         )
 
         if not expand_dot:
@@ -211,16 +207,16 @@ def analyse(text, expand_tags = True, expand_dot = True, expand_underscore = Tru
 
     >>> from pprint import pprint
     >>> pprint(analyse('Mama ma.'))
-    [((u'Mama', u'mama', 'subst:sg:nom:f'),
-      (u'ma', u'mie\u0107', 'fin:sg:ter:imperf'),
-      (u'.', u'.', 'interp')),
-     ((u'Mama', u'mama', 'subst:sg:nom:f'),
-      (u'ma', u'm\xf3j', 'adj:sg:nom:f:pos'),
-      (u'.', u'.', 'interp'))]
+    [(('Mama', 'mama', 'subst:sg:nom:f'),
+      ('ma', 'mieć', 'fin:sg:ter:imperf'),
+      ('.', '.', 'interp')),
+     (('Mama', 'mama', 'subst:sg:nom:f'),
+      ('ma', 'mój', 'adj:sg:nom:f:pos'),
+      ('.', '.', 'interp'))]
     '''
 
     expand_tags = _expand_tags if expand_tags else _dont_expand_tags
-    text = unicode(text)
+    text = str(text)
     text = text.encode('UTF-8')
     dag = defaultdict(list)
     with libmorfeusz_lock:
