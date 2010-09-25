@@ -1,35 +1,24 @@
 # encoding=UTF-8
 
-# Copyright © 2007, 2008 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2007, 2008, 2010 Jakub Wilk <jwilk@jwilk.net>
 #
-# This program is free software; you can redistribute it and/or modify it
-# under the terms of the GNU General Public License, version 2, as published
-# by the Free Software Foundation.
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the “Software”), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 #
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-# or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-# for more details.
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 #
-# You should have received a copy of the GNU General Public License along with
-# this program; if not, see <http://www.gnu.org/licenses>.
-# 
-# Linking python-morfeusz with other modules is making a combined work based on
-# python-morfeusz. Thus, the terms and conditions of the GNU General Public
-# License cover the whole combination.
-#
-# In addition, as a special exception, the copyright holder of python-morfeusz
-# give you permission to combine python-morfeusz with the Morfeusz SIAT
-# morphological analyser <http://nlp.ipipan.waw.pl/~wolinski/morfeusz/>. You
-# may copy and distribute such a system following the terms of the GNU GPL for
-# python-morfeusz and the license of Morfeusz SIAT.
-#
-# Note that people who make modified versions of python-morfeusz are not
-# obligated to grant this special exception for their modified versions; it is
-# their choice whether to do so. The GNU General Public License gives
-# permission to release a modified version without this exception; this
-# exception also makes it possible to release a modified version which carries
-# forward this exception.
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 '''
 Python bindings to Morfeusz.
