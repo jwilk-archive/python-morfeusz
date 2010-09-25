@@ -1,6 +1,6 @@
 # encoding=UTF-8
 
-# Copyright © 2007, 2008 Jakub Wilk <ubanus@users.sf.net>
+# Copyright © 2007, 2008 Jakub Wilk <jwilk@jwilk.net>
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License, version 2, as published
@@ -43,7 +43,7 @@ from thread import allocate_lock
 import ctypes
 from ctypes import c_int, c_char_p
 
-__author__ = 'Jakub Wilk <ubanus@users.sf.net>'
+__author__ = 'Jakub Wilk <jwilk@jwilk.net>'
 __version__ = '0.2403'
 __all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
