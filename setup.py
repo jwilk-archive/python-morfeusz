@@ -26,9 +26,8 @@ def get_version():
     try:
         for line in file:
             if line.startswith('__version__ ='):
-                d = {}
-                exec line in d
-                return d['__version__']
+                version = line.split('=', 1)[1]
+                return eval(version, {}, {})
     finally:
         file.close()
     raise IOError('Unexpected end-of-file')

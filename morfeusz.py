@@ -29,14 +29,24 @@ Bindings for Morfeusz_ SIaT, a Polish morphological analyser.
 
 from __future__ import with_statement
 
+import sys
+py3k = sys.version_info >= (3, 0)
+
 from collections import defaultdict
-from itertools import izip
-from thread import allocate_lock
+if py3k:
+    from _thread import allocate_lock
+else:
+    from thread import allocate_lock
+if not py3k:
+    from itertools import izip as zip
 import ctypes
 from ctypes import c_int, c_char_p
 
+if py3k:
+    unicode = str
+
 __author__ = 'Jakub Wilk <jwilk@jwilk.net>'
-__version__ = '0.3000'
+__version__ = '0.3001'
 __all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
@@ -116,8 +126,18 @@ class InterpEdge(ctypes.Structure):
         ('j', c_int),
         ('_orth', c_char_p),
         ('_base', c_char_p),
-        ('tags', c_char_p)
+        ('_tags', c_char_p)
     )
+
+    if py3k:
+        @property
+        def tags(self):
+            if self._tags is not None:
+                return self._tags.decode('UTF-8')
+    else:
+        @property
+        def tags(self):
+            return self._tags
 
     @property
     def orth(self):
@@ -173,7 +193,7 @@ def expand_tags(tags, expand_dot = True, expand_underscore = True):
         (
             VALUES[attribute] if chunk == '_' and expand_underscore
             else chunk.split('.')
-            for chunk, attribute in izip(tag, ATTRIBUTES[pos])
+            for chunk, attribute in zip(tag, ATTRIBUTES[pos])
         )
 
         if not expand_dot:
