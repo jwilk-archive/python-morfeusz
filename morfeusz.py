@@ -109,7 +109,6 @@ dict(
     for (key, values) in (line.split('=', 1),)
 )
 
-
 libmorfeusz = ctypes.CDLL('libmorfeusz.so.0')
 
 MORFOPT_ENCODING = 1
