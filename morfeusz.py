@@ -258,7 +258,12 @@ def about():
     Return a string containing information on authors and version of the
     underlying library.
     '''
-    return libmorfeusz_about().decode('ISO-8859-2')
+    about = libmorfeusz_about()
+    try:
+        return about.decode('UTF-8')
+    except UnicodeError:
+        return about.decode('ISO-8859-2')
+    return about
 
 if __name__ == '__main__':
     import doctest
