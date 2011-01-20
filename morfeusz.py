@@ -40,7 +40,6 @@ else:
 if not py3k:
     from itertools import izip as zip
 import ctypes
-from ctypes import c_int, c_char_p
 
 if py3k:
     unicode = str
@@ -122,11 +121,11 @@ libmorfeusz_lock = allocate_lock()
 class InterpEdge(ctypes.Structure):
     _fields_ = \
     (
-        ('i', c_int),
-        ('j', c_int),
-        ('_orth', c_char_p),
-        ('_base', c_char_p),
-        ('_tags', c_char_p)
+        ('i', ctypes.c_int),
+        ('j', ctypes.c_int),
+        ('_orth', ctypes.c_char_p),
+        ('_base', ctypes.c_char_p),
+        ('_tags', ctypes.c_char_p)
     )
 
     if py3k:
@@ -152,7 +151,7 @@ class InterpEdge(ctypes.Structure):
 libmorfeusz_analyse = libmorfeusz.morfeusz_analyse
 libmorfeusz_analyse.restype = ctypes.POINTER(InterpEdge)
 libmorfeusz_about = libmorfeusz.morfeusz_about
-libmorfeusz_about.restype = c_char_p
+libmorfeusz_about.restype = ctypes.c_char_p
 
 def expand_tags(tags, expand_dot = True, expand_underscore = True):
     r'''
