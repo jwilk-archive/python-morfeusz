@@ -29,17 +29,18 @@ Bindings for Morfeusz_ SIaT, a Polish morphological analyser.
 
 from __future__ import with_statement
 
+import collections
+import ctypes
 import sys
+
 py3k = sys.version_info >= (3, 0)
 
-from collections import defaultdict
 if py3k:
-    from _thread import allocate_lock
+    import _thread as thread
 else:
-    from thread import allocate_lock
+    import thread
 if not py3k:
     from itertools import izip as zip
-import ctypes
 
 if py3k:
     unicode = str
@@ -115,7 +116,7 @@ MORFOPT_ENCODING = 1
 MORFEUSZ_UTF_8 = 8
 
 libmorfeusz.morfeusz_set_option(MORFOPT_ENCODING, MORFEUSZ_UTF_8)
-libmorfeusz_lock = allocate_lock()
+libmorfeusz_lock = thread.allocate_lock()
 
 class InterpEdge(ctypes.Structure):
     _fields_ = \
@@ -232,7 +233,7 @@ def analyse(text, expand_tags = True, expand_dot = True, expand_underscore = Tru
     expand_tags = _expand_tags if expand_tags else _dont_expand_tags
     text = unicode(text)
     text = text.encode('UTF-8')
-    dag = defaultdict(list)
+    dag = collections.defaultdict(list)
     with libmorfeusz_lock:
         for edge in libmorfeusz_analyse(text):
             if edge.i == -1:
