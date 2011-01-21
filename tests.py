@@ -75,6 +75,14 @@ class test_analyse(unittest.TestCase):
             ((u('Mama'), u('mama'), 'subst:sg:nom:f'), (u('ma'), u('mój'), 'adj:sg:nom:f:pos'), (u('.'), u('.'), 'interp'))
         ])
 
+class test_about(unittest.TestCase):
+
+    def test_type(self):
+        self.assertEqual(
+            type(morfeusz.about()),
+            type(u(''))
+        )
+
 if __name__ == '__main__':
     unittest.main()
 
