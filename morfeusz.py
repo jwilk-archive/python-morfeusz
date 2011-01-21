@@ -21,10 +21,10 @@
 # SOFTWARE.
 
 '''
-Bindings for Morfeusz_ SIaT, a Polish morphological analyser.
+Bindings for Morfeusz_, a Polish morphological analyser.
 
 .. _Morfeusz:
-   http://nlp.ipipan.waw.pl/~wolinski/morfeusz/
+   http://sgjp.pl/morfeusz/
 '''
 
 from __future__ import with_statement

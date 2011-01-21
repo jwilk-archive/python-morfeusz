@@ -1,9 +1,9 @@
 '''
-*python-morfeusz* is a set of bindings for Morfeusz_ SIaT,
+*python-morfeusz* is a set of bindings for Morfeusz_,
 a Polish morphological analyser.
 
 .. _Morfeusz:
-   http://nlp.ipipan.waw.pl/~wolinski/morfeusz/
+   http://sgjp.pl/morfeusz/
 '''
 
 classifiers = '''
