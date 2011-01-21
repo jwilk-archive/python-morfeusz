@@ -154,31 +154,6 @@ libmorfeusz_about = libmorfeusz.morfeusz_about
 libmorfeusz_about.restype = ctypes.c_char_p
 
 def expand_tags(tags, expand_dot = True, expand_underscore = True):
-    r'''
-    >>> from pprint import pprint
-
-    >>> tags = 'adj:sg:nom:m1.m2.m3:pos|adj:sg:acc:m3:pos'
-    >>> xtags = expand_tags(tags)
-    >>> pprint(list(xtags))
-    ['adj:sg:nom:m1:pos',
-     'adj:sg:nom:m2:pos',
-     'adj:sg:nom:m3:pos',
-     'adj:sg:acc:m3:pos']
-    >>> xtags = expand_tags(tags, expand_dot=False)
-    >>> pprint(list(xtags))
-    ['adj:sg:nom:m1.m2.m3:pos', 'adj:sg:acc:m3:pos']
-
-    >>> tags = 'ppron3:sg:acc:f:ter:_:npraep'
-    >>> xtags = expand_tags(tags)
-    >>> pprint(list(xtags))
-    ['ppron3:sg:acc:f:ter:akc:npraep', 'ppron3:sg:acc:f:ter:nakc:npraep']
-    >>> xtags = expand_tags(tags, expand_dot = False)
-    >>> pprint(list(xtags))
-    ['ppron3:sg:acc:f:ter:akc.nakc:npraep']
-    >>> xtags = expand_tags(tags, expand_underscore = False)
-    >>> pprint(list(xtags))
-    ['ppron3:sg:acc:f:ter:_:npraep']
-    '''
 
     if tags is None:
         yield
@@ -217,19 +192,9 @@ def _dont_expand_tags(s, **kwargs):
     return (s,)
 
 def analyse(text, expand_tags = True, expand_dot = True, expand_underscore = True):
-    r'''
-    Analyse the text.
-
-    >>> from pprint import pprint
-    >>> pprint(analyse('Mama ma.'))
-    [((u'Mama', u'mama', 'subst:sg:nom:f'),
-      (u'ma', u'mie\u0107', 'fin:sg:ter:imperf'),
-      (u'.', u'.', 'interp')),
-     ((u'Mama', u'mama', 'subst:sg:nom:f'),
-      (u'ma', u'm\xf3j', 'adj:sg:nom:f:pos'),
-      (u'.', u'.', 'interp'))]
     '''
-
+    Analyse the text.
+    '''
     expand_tags = _expand_tags if expand_tags else _dont_expand_tags
     text = unicode(text)
     text = text.encode('UTF-8')
