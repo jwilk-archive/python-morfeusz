@@ -38,7 +38,7 @@ distutils.core.setup(
     name = 'python-morfeusz',
     version = get_version(),
     license = 'MIT',
-    description = 'bindings for Morfeusz SIAT',
+    description = 'bindings for Morfeusz',
     long_description = __doc__.strip(),
     classifiers = classifiers,
     url = 'http://jwilk.net/software/python-morfeusz',
