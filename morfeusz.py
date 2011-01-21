@@ -1,6 +1,6 @@
 # encoding=UTF-8
 
-# Copyright © 2007, 2008, 2010 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2007, 2008, 2010, 2011 Jakub Wilk <jwilk@jwilk.net>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
