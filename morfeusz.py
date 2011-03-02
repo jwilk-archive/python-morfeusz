@@ -46,7 +46,7 @@ if py3k:
     unicode = str
 
 __author__ = 'Jakub Wilk <jwilk@jwilk.net>'
-__version__ = '0.3001'
+__version__ = '0.3002'
 __all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
@@ -54,9 +54,11 @@ subst=number case gender
 depr=number case gender
 adj=number case gender degree
 adja=
+adjc=
 adjp=
 adv=degree
 num=number case gender accommodability
+numcol=number case gender accommodability
 ppron12=number case gender person accentability
 ppron3=number case gender person accentability post_prepositionality
 siebie=case
@@ -76,6 +78,10 @@ winien=number gender aspect
 pred=
 prep=case vocalicity
 conj=
+comp=
+brev=fullstoppedness
+burk=
+interj=
 qub=vocalicity
 xxs=number case gender
 xxx=
@@ -102,6 +108,7 @@ post_prepositionality=npraep praep
 accommodability=congr rec
 agglutination=agl nagl
 vocalicity=nwok wok
+fullstoppedness=pun npun
 '''
 VALUES = \
 dict(
