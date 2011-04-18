@@ -248,8 +248,4 @@ def about():
         return about.decode('ISO-8859-2')
     return about
 
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
-
 # vim:ts=4 sw=4 et
