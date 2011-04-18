@@ -46,7 +46,7 @@ if py3k:
     unicode = str
 
 __author__ = 'Jakub Wilk <jwilk@jwilk.net>'
-__version__ = '0.3100'
+__version__ = '0.3200'
 __all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
@@ -198,13 +198,27 @@ _expand_tags = expand_tags
 def _dont_expand_tags(s, **kwargs):
     return [s]
 
-def analyse(text, expand_tags=True, expand_dot=True, expand_underscore=True):
+def analyse(text, expand_tags=True, expand_dot=True, expand_underscore=True, dag=False):
     '''
     Analyse the text.
     '''
     expand_tags = _expand_tags if expand_tags else _dont_expand_tags
     text = unicode(text)
     text = text.encode('UTF-8')
+    analyse = _analyse_as_dag if dag else _analyse_as_list
+    return analyse(text=text, expand_tags=expand_tags, expand_dot=expand_dot, expand_underscore=expand_underscore)
+
+def _analyse_as_dag(text, expand_tags, expand_dot, expand_underscore):
+    result = []
+    with libmorfeusz_lock:
+        for edge in libmorfeusz_analyse(text):
+            if edge.i == -1:
+                break
+            for tag in expand_tags(edge.tags, expand_dot=expand_dot, expand_underscore=expand_underscore):
+                result += [(edge.i, edge.j, (edge.orth, edge.base, tag))]
+    return result
+
+def _analyse_as_list(text, expand_tags, expand_dot, expand_underscore):
     dag = collections.defaultdict(list)
     with libmorfeusz_lock:
         for edge in libmorfeusz_analyse(text):
@@ -212,7 +226,6 @@ def analyse(text, expand_tags=True, expand_dot=True, expand_underscore=True):
                 break
             for tag in expand_tags(edge.tags, expand_dot=expand_dot, expand_underscore=expand_underscore):
                 dag[edge.i] += [((edge.orth, edge.base, tag), edge.j)]
-
     def expand_dag(i):
         nexts = dag[i]
         if not nexts:
@@ -221,7 +234,6 @@ def analyse(text, expand_tags=True, expand_dot=True, expand_underscore=True):
             for head, j in nexts:
                 for tail in expand_dag(j):
                     yield [head] + tail
-
     return list(expand_dag(0))
 
 def about():

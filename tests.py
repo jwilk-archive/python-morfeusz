@@ -75,6 +75,23 @@ class test_analyse(unittest.TestCase):
             [(u('Mama'), u('mama'), 'subst:sg:nom:f'), (u('ma'), u('mój'), 'adj:sg:nom:f:pos'), (u('.'), u('.'), 'interp')]
         ])
 
+    def test2(self):
+        text = u('Miałem miał.')
+        interps = morfeusz.analyse(text, dag=True)
+        self.assertEqual(interps, [
+            (0, 1, (u('Miał'), u('mieć'), u('praet:sg:m1:imperf'))),
+            (0, 1, (u('Miał'), u('mieć'), u('praet:sg:m2:imperf'))),
+            (0, 1, (u('Miał'), u('mieć'), u('praet:sg:m3:imperf'))),
+            (1, 2, (u('em'), u('być'), u('aglt:sg:pri:imperf:wok'))),
+            (0, 2, (u('Miałem'), u('miał'), u('subst:sg:inst:m3'))),
+            (2, 3, (u('miał'), u('miał'), u('subst:sg:nom:m3'))),
+            (2, 3, (u('miał'), u('miał'), u('subst:sg:acc:m3'))),
+            (2, 3, (u('miał'), u('mieć'), u('praet:sg:m1:imperf'))),
+            (2, 3, (u('miał'), u('mieć'), u('praet:sg:m2:imperf'))),
+            (2, 3, (u('miał'), u('mieć'), u('praet:sg:m3:imperf'))),
+            (3, 4, (u('.'), u('.'), u('interp'))),
+        ])
+
 class test_about(unittest.TestCase):
 
     def test_type(self):
