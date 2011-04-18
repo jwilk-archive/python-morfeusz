@@ -46,7 +46,7 @@ if py3k:
     unicode = str
 
 __author__ = 'Jakub Wilk <jwilk@jwilk.net>'
-__version__ = '0.3002'
+__version__ = '0.3100'
 __all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
@@ -216,11 +216,11 @@ def analyse(text, expand_tags=True, expand_dot=True, expand_underscore=True):
     def expand_dag(i):
         nexts = dag[i]
         if not nexts:
-            yield ()
+            yield []
         else:
             for head, j in nexts:
                 for tail in expand_dag(j):
-                    yield (head,) + tail
+                    yield [head] + tail
 
     return list(expand_dag(0))
 

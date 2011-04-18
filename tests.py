@@ -68,11 +68,11 @@ class test_analyse(unittest.TestCase):
         interps = morfeusz.analyse(text)
         if sgjp:
             self.assertEqual(interps.pop(),
-                ((u('Mama'), u('mama'), 'subst:sg:nom:f'), (u('ma'), u('mój'), 'adj:sg:voc:f:pos'), (u('.'), u('.'), 'interp'))
+                [(u('Mama'), u('mama'), 'subst:sg:nom:f'), (u('ma'), u('mój'), 'adj:sg:voc:f:pos'), (u('.'), u('.'), 'interp')]
             )
         self.assertEqual(interps, [
-            ((u('Mama'), u('mama'), 'subst:sg:nom:f'), (u('ma'), u('mieć'), 'fin:sg:ter:imperf'), (u('.'), u('.'), 'interp')),
-            ((u('Mama'), u('mama'), 'subst:sg:nom:f'), (u('ma'), u('mój'), 'adj:sg:nom:f:pos'), (u('.'), u('.'), 'interp'))
+            [(u('Mama'), u('mama'), 'subst:sg:nom:f'), (u('ma'), u('mieć'), 'fin:sg:ter:imperf'), (u('.'), u('.'), 'interp')],
+            [(u('Mama'), u('mama'), 'subst:sg:nom:f'), (u('ma'), u('mój'), 'adj:sg:nom:f:pos'), (u('.'), u('.'), 'interp')]
         ])
 
 class test_about(unittest.TestCase):
