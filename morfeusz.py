@@ -196,7 +196,7 @@ def expand_tags(tags, expand_dot=True, expand_underscore=True):
 _expand_tags = expand_tags
 
 def _dont_expand_tags(s, **kwargs):
-    return (s,)
+    return [s]
 
 def analyse(text, expand_tags=True, expand_dot=True, expand_underscore=True):
     '''
@@ -211,7 +211,7 @@ def analyse(text, expand_tags=True, expand_dot=True, expand_underscore=True):
             if edge.i == -1:
                 break
             for tag in expand_tags(edge.tags, expand_dot=expand_dot, expand_underscore=expand_underscore):
-                dag[edge.i] += ((edge.orth, edge.base, tag), edge.j),
+                dag[edge.i] += [((edge.orth, edge.base, tag), edge.j)]
 
     def expand_dag(i):
         nexts = dag[i]
