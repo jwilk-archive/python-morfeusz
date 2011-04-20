@@ -46,7 +46,7 @@ if py3k:
     unicode = str
 
 __author__ = 'Jakub Wilk <jwilk@jwilk.net>'
-__version__ = '0.3200'
+__version__ = '0.3300'
 __all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
@@ -87,6 +87,7 @@ xxs=number case gender
 xxx=
 interp=
 ign=
+sp=
 '''
 ATTRIBUTES = \
 dict(
@@ -121,6 +122,10 @@ libmorfeusz = ctypes.CDLL('libmorfeusz.so.0')
 
 MORFOPT_ENCODING = 1
 MORFEUSZ_UTF_8 = 8
+
+MORFOPT_WHITESPACE = 2
+MORFEUSZ_SKIP_WHITESPACE = 0
+MORFEUSZ_KEEP_WHITESPACE = 2
 
 libmorfeusz.morfeusz_set_option(MORFOPT_ENCODING, MORFEUSZ_UTF_8)
 libmorfeusz_lock = thread.allocate_lock()
@@ -198,7 +203,7 @@ _expand_tags = expand_tags
 def _dont_expand_tags(s, **kwargs):
     return [s]
 
-def analyse(text, expand_tags=True, expand_dot=True, expand_underscore=True, dag=False):
+def analyse(text, expand_tags=True, expand_dot=True, expand_underscore=True, dag=False, keep_whitespace=False):
     '''
     Analyse the text.
     '''
@@ -206,26 +211,42 @@ def analyse(text, expand_tags=True, expand_dot=True, expand_underscore=True, dag
     text = unicode(text)
     text = text.encode('UTF-8')
     analyse = _analyse_as_dag if dag else _analyse_as_list
-    return analyse(text=text, expand_tags=expand_tags, expand_dot=expand_dot, expand_underscore=expand_underscore)
+    return analyse(
+        text=text,
+        expand_tags=expand_tags,
+        expand_dot=expand_dot,
+        expand_underscore=expand_underscore,
+        keep_whitespace=keep_whitespace
+    )
 
-def _analyse_as_dag(text, expand_tags, expand_dot, expand_underscore):
+def _analyse_as_dag(text, expand_tags, expand_dot, expand_underscore, keep_whitespace):
     result = []
     with libmorfeusz_lock:
+        if keep_whitespace:
+            if libmorfeusz.morfeusz_set_option(MORFOPT_WHITESPACE, MORFEUSZ_KEEP_WHITESPACE) != 1:
+                raise NotImplementedError("This version of Morfeusz doesn't support keep_whitespace")
         for edge in libmorfeusz_analyse(text):
             if edge.i == -1:
                 break
             for tag in expand_tags(edge.tags, expand_dot=expand_dot, expand_underscore=expand_underscore):
                 result += [(edge.i, edge.j, (edge.orth, edge.base, tag))]
+        if keep_whitespace:
+            libmorfeusz.morfeusz_set_option(MORFOPT_WHITESPACE, MORFEUSZ_SKIP_WHITESPACE)
     return result
 
-def _analyse_as_list(text, expand_tags, expand_dot, expand_underscore):
+def _analyse_as_list(text, expand_tags, expand_dot, expand_underscore, keep_whitespace):
     dag = collections.defaultdict(list)
     with libmorfeusz_lock:
+        if keep_whitespace:
+            if libmorfeusz.morfeusz_set_option(MORFOPT_WHITESPACE, MORFEUSZ_KEEP_WHITESPACE) != 1:
+                raise NotImplementedError("This version of Morfeusz doesn't support keep_whitespace")
         for edge in libmorfeusz_analyse(text):
             if edge.i == -1:
                 break
             for tag in expand_tags(edge.tags, expand_dot=expand_dot, expand_underscore=expand_underscore):
                 dag[edge.i] += [((edge.orth, edge.base, tag), edge.j)]
+        if keep_whitespace:
+            libmorfeusz.morfeusz_set_option(MORFOPT_WHITESPACE, MORFEUSZ_SKIP_WHITESPACE)
     def expand_dag(i):
         nexts = dag[i]
         if not nexts:
