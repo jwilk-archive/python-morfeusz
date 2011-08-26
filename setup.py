@@ -18,7 +18,6 @@ Programming Language :: Python :: 3
 Topic :: Text Processing :: Linguistic
 '''.strip().split('\n')
 
-import os
 import distutils.core
 
 def get_version():
@@ -31,8 +30,6 @@ def get_version():
     finally:
         file.close()
     raise IOError('Unexpected end-of-file')
-
-os.putenv('TAR_OPTIONS', '--owner root --group root --mode a+rX')
 
 distutils.core.setup(
     name = 'python-morfeusz',
