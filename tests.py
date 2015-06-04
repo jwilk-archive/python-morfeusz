@@ -3,7 +3,7 @@
 import sys
 py3k = sys.version_info >= (3, 0)
 
-if py3k:
+if sys.version_info >= (2, 7):
     import unittest
 else:
     import unittest2 as unittest
