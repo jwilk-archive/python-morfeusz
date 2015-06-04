@@ -32,16 +32,16 @@ def get_version():
     raise IOError('Unexpected end-of-file')
 
 distutils.core.setup(
-    name = 'python-morfeusz',
-    version = get_version(),
-    license = 'MIT',
-    description = 'bindings for Morfeusz',
-    long_description = __doc__.strip(),
-    classifiers = classifiers,
-    url = 'http://jwilk.net/software/python-morfeusz',
-    author = 'Jakub Wilk',
-    author_email = 'jwilk@jwilk.net',
-    py_modules = ['morfeusz']
+    name='python-morfeusz',
+    version=get_version(),
+    license='MIT',
+    description='bindings for Morfeusz',
+    long_description=__doc__.strip(),
+    classifiers=classifiers,
+    url='http://jwilk.net/software/python-morfeusz',
+    author='Jakub Wilk',
+    author_email='jwilk@jwilk.net',
+    py_modules=['morfeusz']
 )
 
 # vim:ts=4 sts=4 sw=4 et
