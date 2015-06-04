@@ -268,4 +268,4 @@ def about():
     except UnicodeError:
         return about.decode('ISO-8859-2')
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et
