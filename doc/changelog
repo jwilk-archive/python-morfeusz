@@ -1,0 +1,25 @@
+python-morfeusz (0.3300) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 05 Jun 2015 20:53:11 +0200
+
+python-morfeusz (0.3200) unstable; urgency=low
+
+  * Update the tagset definition.
+  * Add option (dag=True) to return DAGs.
+  * Return lists instead of tuples.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 18 Apr 2011 12:35:40 +0200
+
+python-morfeusz (0.3001) unstable; urgency=low
+
+  * Make the bindings compatible with the SGJP version of Morfeusz.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 21 Jan 2011 01:50:39 +0100
+
+python-morfeusz (0.3000) unstable; urgency=low
+
+  * Initial release.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 25 Sep 2010 20:43:52 +0200
