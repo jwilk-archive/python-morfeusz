@@ -31,6 +31,7 @@ from __future__ import with_statement
 
 import collections
 import ctypes
+import os
 import sys
 
 py3k = sys.version_info >= (3, 0)
@@ -118,7 +119,10 @@ dict(
     for (key, values) in (line.split('=', 1),)
 )
 
-libmorfeusz = ctypes.CDLL('libmorfeusz.so.0')
+if os.name == 'nt':
+    libmorfeusz = ctypes.CDLL('morfeusz.dll')
+else:
+    libmorfeusz = ctypes.CDLL('libmorfeusz.so.0')
 
 MORFOPT_ENCODING = 1
 MORFEUSZ_UTF_8 = 8
