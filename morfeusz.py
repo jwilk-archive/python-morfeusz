@@ -90,8 +90,7 @@ interp=
 ign=
 sp=
 '''
-ATTRIBUTES = \
-dict(
+ATTRIBUTES = dict(
     (key, tuple(values.split()))
     for line in ATTRIBUTES.splitlines() if line
     for (key, values) in (line.split('=', 1),)
@@ -112,8 +111,7 @@ agglutination=agl nagl
 vocalicity=nwok wok
 fullstoppedness=pun npun
 '''
-VALUES = \
-dict(
+VALUES = dict(
     (key, tuple(values.split()))
     for line in VALUES.splitlines() if line
     for (key, values) in (line.split('=', 1),)
@@ -135,8 +133,7 @@ libmorfeusz.morfeusz_set_option(MORFOPT_ENCODING, MORFEUSZ_UTF_8)
 libmorfeusz_lock = thread.allocate_lock()
 
 class InterpEdge(ctypes.Structure):
-    _fields_ = \
-    (
+    _fields_ = (
         ('i', ctypes.c_int),
         ('j', ctypes.c_int),
         ('_orth', ctypes.c_char_p),
@@ -179,8 +176,7 @@ def expand_tags(tags, expand_dot=True, expand_underscore=True):
         tag = tag.split(':')
         pos = tag.pop(0)
         chunks = [(pos,)]
-        chunks += \
-        (
+        chunks += (
             VALUES[attribute] if chunk == '_' and expand_underscore
             else chunk.split('.')
             for chunk, attribute in zip(tag, ATTRIBUTES[pos])
