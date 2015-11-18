@@ -2,7 +2,7 @@ python-morfeusz (0.3300) UNRELEASED; urgency=low
 
   * Update the tagset definition.
   * Add option to keep whitespace (keep_whitespace=True).
-  * Open the DLL library on Windows sytems.
+  * Open the DLL library on Windows systems.
     Thanks to Caroline Linde for the bug report.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Fri, 05 Jun 2015 21:02:00 +0200
