@@ -1,3 +1,9 @@
+python-morfeusz (0.3400) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 16 Jan 2016 23:21:20 +0100
+
 python-morfeusz (0.3300) unstable; urgency=low
 
   * Update the tagset definition.

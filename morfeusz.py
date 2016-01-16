@@ -47,7 +47,7 @@ if py3k:
     unicode = str
 
 __author__ = 'Jakub Wilk <jwilk@jwilk.net>'
-__version__ = '0.3300'
+__version__ = '0.3400'
 __all__ = ['analyse', 'about', 'expand_tags', 'ATTRIBUTES', 'VALUES']
 
 ATTRIBUTES = '''
