@@ -1,8 +1,9 @@
 python-morfeusz (0.3400) UNRELEASED; urgency=low
 
-  * 
+  * Open the correct library on Mac OS X systems.
+    Thanks to Aleksandra Nabożny for the bug report.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 16 Jan 2016 23:21:20 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 24 Feb 2016 12:52:48 +0100
 
 python-morfeusz (0.3300) unstable; urgency=low
 

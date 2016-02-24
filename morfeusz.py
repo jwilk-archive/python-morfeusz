@@ -1,6 +1,6 @@
 # encoding=UTF-8
 
-# Copyright © 2007-2015 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2007-2016 Jakub Wilk <jwilk@jwilk.net>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -119,6 +119,8 @@ VALUES = dict(
 
 if os.name == 'nt':
     libmorfeusz = ctypes.CDLL('morfeusz.dll')
+elif sys.platform == 'darwin':
+    libmorfeusz = ctypes.CDLL('libmorfeusz.dylib')
 else:
     libmorfeusz = ctypes.CDLL('libmorfeusz.so.0')
 
