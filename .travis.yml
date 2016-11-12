@@ -7,7 +7,7 @@ python:
 - "3.4"
 - "3.5"
 - "3.6-dev"
-- nightly
+- "3.7-dev"
 script:
 - if [ "$TRAVIS_PYTHON_VERSION" = '2.6' ]; then pip install unittest2; fi
 - wget http://sgjp.pl/morfeusz/morfeusz-siat/morfeusz-linux64-20080205.tar.bz2
