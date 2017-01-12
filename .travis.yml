@@ -6,7 +6,7 @@ python:
 - "3.3"
 - "3.4"
 - "3.5"
-- "3.6-dev"
+- "3.6"
 - "3.7-dev"
 script:
 - if [ "$TRAVIS_PYTHON_VERSION" = '2.6' ]; then pip install unittest2; fi
