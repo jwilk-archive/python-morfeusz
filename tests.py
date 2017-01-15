@@ -1,7 +1,6 @@
 # encoding=UTF-8
 
 import sys
-py3k = sys.version_info >= (3, 0)
 
 if sys.version_info >= (2, 7):
     import unittest
@@ -9,6 +8,8 @@ else:
     import unittest2 as unittest
 
 import morfeusz
+
+py3k = sys.version_info >= (3, 0)
 
 if py3k:
     def u(s):
