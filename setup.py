@@ -6,18 +6,6 @@ a Polish morphological analyser.
    http://sgjp.pl/morfeusz/
 '''
 
-classifiers = '''
-Development Status :: 4 - Beta
-Intended Audience :: Developers
-License :: OSI Approved :: MIT License
-Natural Language :: Polish
-Operating System :: POSIX :: Linux
-Programming Language :: Python
-Programming Language :: Python :: 2
-Programming Language :: Python :: 3
-Topic :: Text Processing :: Linguistic
-'''.strip().splitlines()
-
 import distutils.core
 
 def get_version():
@@ -30,6 +18,18 @@ def get_version():
     finally:
         file.close()
     raise IOError('Unexpected end-of-file')
+
+classifiers = '''
+Development Status :: 4 - Beta
+Intended Audience :: Developers
+License :: OSI Approved :: MIT License
+Natural Language :: Polish
+Operating System :: POSIX :: Linux
+Programming Language :: Python
+Programming Language :: Python :: 2
+Programming Language :: Python :: 3
+Topic :: Text Processing :: Linguistic
+'''.strip().splitlines()
 
 distutils.core.setup(
     name='python-morfeusz',
