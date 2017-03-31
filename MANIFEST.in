@@ -1,4 +1,6 @@
 include MANIFEST.in
+
+include LICENSE
 include doc/*
 include morfeusz.py
 include private/*
