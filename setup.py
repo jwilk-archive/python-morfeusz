@@ -33,12 +33,9 @@ import io
 import distutils.core
 
 def get_version():
-    with io.open('morfeusz.py', encoding='UTF-8') as file:
-        for line in file:
-            if line.startswith('__version__ ='):
-                version = line.split('=', 1)[1]
-                return eval(version, {}, {})
-    raise IOError('Unexpected end-of-file')
+    with io.open('doc/changelog', encoding='UTF-8') as file:
+        line = file.readline()
+    return line.split()[1].strip('()')
 
 classifiers = '''
 Development Status :: 4 - Beta
