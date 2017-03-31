@@ -5,8 +5,9 @@ python-morfeusz (0.3400) UNRELEASED; urgency=low
   * Drop support for Python 2.5.
   * Improve the setup script:
     + Fix unicode error with Python 3 and LC_ALL=C.
+  * Put license into a separate file.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 31 Mar 2017 15:29:44 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 31 Mar 2017 15:40:47 +0200
 
 python-morfeusz (0.3300) unstable; urgency=low
 
