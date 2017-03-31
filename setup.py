@@ -33,14 +33,11 @@ import io
 import distutils.core
 
 def get_version():
-    file = io.open('morfeusz.py', encoding='UTF-8')
-    try:
+    with io.open('morfeusz.py', encoding='UTF-8') as file:
         for line in file:
             if line.startswith('__version__ ='):
                 version = line.split('=', 1)[1]
                 return eval(version, {}, {})
-    finally:
-        file.close()
     raise IOError('Unexpected end-of-file')
 
 classifiers = '''
