@@ -28,10 +28,12 @@ a Polish morphological analyser.
    http://sgjp.pl/morfeusz/
 '''
 
+import io
+
 import distutils.core
 
 def get_version():
-    file = open('morfeusz.py')
+    file = io.open('morfeusz.py', encoding='UTF-8')
     try:
         for line in file:
             if line.startswith('__version__ ='):
