@@ -9,14 +9,12 @@ else:
 
 import morfeusz
 
-py3k = sys.version_info >= (3, 0)
-
-if py3k:
-    def u(s):
-        return s
-else:
+if str is bytes:
     def u(s):
         return s.decode('UTF-8')
+else:
+    def u(s):
+        return s
 
 sgjp = 'SGJP' in morfeusz.about()
 
