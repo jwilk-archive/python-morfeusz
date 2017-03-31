@@ -2,8 +2,11 @@ python-morfeusz (0.3400) UNRELEASED; urgency=low
 
   * Open the correct library on Mac OS X systems.
     Thanks to Aleksandra Nabożny for the bug report.
+  * Drop support for Python 2.5.
+  * Improve the setup script:
+    + Fix unicode error with Python 3 and LC_ALL=C.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 24 Feb 2016 12:52:48 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 31 Mar 2017 15:29:44 +0200
 
 python-morfeusz (0.3300) unstable; urgency=low
 
