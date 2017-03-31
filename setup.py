@@ -29,13 +29,27 @@ a Polish morphological analyser.
 '''
 
 import io
+import os
 
 import distutils.core
+from distutils.command.sdist import sdist as distutils_sdist
 
 def get_version():
     with io.open('doc/changelog', encoding='UTF-8') as file:
         line = file.readline()
     return line.split()[1].strip('()')
+
+class cmd_sdist(distutils_sdist):
+
+    def maybe_move_file(self, base_dir, src, dst):
+        src = os.path.join(base_dir, src)
+        dst = os.path.join(base_dir, dst)
+        if os.path.exists(src):
+            self.move_file(src, dst)
+
+    def make_release_tree(self, base_dir, files):
+        distutils_sdist.make_release_tree(self, base_dir, files)
+        self.maybe_move_file(base_dir, 'LICENSE', 'doc/LICENSE')
 
 classifiers = '''
 Development Status :: 4 - Beta
@@ -59,7 +73,10 @@ distutils.core.setup(
     url='http://jwilk.net/software/python-morfeusz',
     author='Jakub Wilk',
     author_email='jwilk@jwilk.net',
-    py_modules=['morfeusz']
+    py_modules=['morfeusz'],
+    cmdclass = dict(
+        sdist=cmd_sdist,
+    )
 )
 
 # vim:ts=4 sts=4 sw=4 et
