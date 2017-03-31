@@ -13,5 +13,6 @@ script:
 - wget http://sgjp.pl/morfeusz/morfeusz-siat/morfeusz-linux64-20080205.tar.bz2
 - tar -xvf morfeusz-linux64-20080205.tar.bz2
 - LD_LIBRARY_PATH=$PWD python tests.py
+- LC_ALL=C python setup.py --version
 
 # vim:ts=2 sts=2 sw=2 et
