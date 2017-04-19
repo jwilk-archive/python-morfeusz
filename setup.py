@@ -34,6 +34,13 @@ import os
 import distutils.core
 from distutils.command.sdist import sdist as distutils_sdist
 
+try:
+    import distutils644
+except ImportError:
+    pass
+else:
+    distutils644.install()
+
 b''  # Python >= 2.6 is required
 
 def get_version():
