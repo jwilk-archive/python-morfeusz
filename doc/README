@@ -1,0 +1,44 @@
+Overview
+========
+
+**python-morfeusz** is a Python interface to Morfeusz_,
+a Polish morphological analyser.
+
+.. _Morfeusz:
+   http://sgjp.pl/morfeusz/
+
+Example
+-------
+
+.. code:: pycon
+
+   >>> from morfeusz import *
+   >>> for s in analyse('Mama ma.'):
+   ...     print(s)
+   ...
+   [('Mama', 'mama', 'subst:sg:nom:f'), ('ma', 'mieć', 'fin:sg:ter:imperf'), ('.', '.', 'interp')]
+   [('Mama', 'mama', 'subst:sg:nom:f'), ('ma', 'mój', 'adj:sg:nom:f:pos'), ('.', '.', 'interp')]
+   [('Mama', 'mama', 'subst:sg:nom:f'), ('ma', 'mój', 'adj:sg:voc:f:pos'), ('.', '.', 'interp')]
+
+Prerequisites
+=============
+
+* Python ≥ 2.6 or ≥ 3.2.
+
+* Morfeusz_ proper.
+
+  This Python interface works only with very old versions of Morfeusz.
+  The last supported version appears to be the one released on 2013-04-13:
+
+  * source: http://sgjp.pl/morfeusz/download/morfeusz-SGJP-src-20130413.tar.bz2
+  * Linux, 32-bit: http://sgjp.pl/morfeusz/download/morfeusz-SGJP-linux32-20130413.tar.bz2
+  * Linux, 64-bit: http://sgjp.pl/morfeusz/download/morfeusz-SGJP-linux64-20130413.tar.bz2
+  * Mac OS X, 32-bit: http://sgjp.pl/morfeusz/download/morfeusz-SGJP-darwin32-20130413.tar.bz2
+  * Windows, 32-bit: http://sgjp.pl/morfeusz/download/morfeusz-SGJP-win32-20130413.tar.bz2
+  * Windows, 64-bit: http://sgjp.pl/morfeusz/download/morfeusz-SGJP-win64-20130413.tar.bz2
+
+  Morfeusz 2 is *not* supported.
+  (Morfeusz 2 has its own Python interface, with a different API.
+  You should use it instead.)
+
+.. vim:ft=rst ts=3 sts=3 sw=3 et
