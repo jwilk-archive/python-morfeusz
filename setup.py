@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 '''
-*python-morfeusz* is a set of bindings for Morfeusz_,
+*python-morfeusz* is a Python interface to Morfeusz_,
 a Polish morphological analyser.
 
 .. _Morfeusz:
@@ -76,7 +76,7 @@ distutils.core.setup(
     name='python-morfeusz',
     version=get_version(),
     license='MIT',
-    description='bindings for Morfeusz',
+    description='interface to Morfeusz',
     long_description=__doc__.strip(),
     classifiers=classifiers,
     url='http://jwilk.net/software/python-morfeusz',

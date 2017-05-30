@@ -21,7 +21,8 @@
 # SOFTWARE.
 
 '''
-Bindings for Morfeusz_, a Polish morphological analyser.
+Python interface to Morfeusz_,
+a Polish morphological analyser.
 
 .. _Morfeusz:
    http://sgjp.pl/morfeusz/

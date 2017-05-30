@@ -28,7 +28,7 @@ python-morfeusz (0.3200) unstable; urgency=low
 
 python-morfeusz (0.3001) unstable; urgency=low
 
-  * Make the bindings compatible with the SGJP version of Morfeusz.
+  * Make the interface compatible with the SGJP version of Morfeusz.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Fri, 21 Jan 2011 01:50:39 +0100
 
