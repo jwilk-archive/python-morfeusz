@@ -66,6 +66,8 @@ Intended Audience :: Developers
 License :: OSI Approved :: MIT License
 Natural Language :: Polish
 Operating System :: POSIX :: Linux
+Operating System :: MacOS :: MacOS X
+Operating System :: Microsoft :: Windows
 Programming Language :: Python
 Programming Language :: Python :: 2
 Programming Language :: Python :: 3
