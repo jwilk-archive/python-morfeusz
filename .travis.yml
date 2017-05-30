@@ -10,10 +10,15 @@ python:
 - "3.5"
 - "3.6"
 - "3.7-dev"
+env:
+- MORFEUSZ_VERSION=siat-20080205
+- MORFEUSZ_VERSION=sgjp-20130413
 script:
 - if [ "$TRAVIS_PYTHON_VERSION" = '2.6' ]; then pip install unittest2; fi
-- wget http://sgjp.pl/morfeusz/morfeusz-siat/morfeusz-linux64-20080205.tar.bz2
-- tar -xvf morfeusz-linux64-20080205.tar.bz2
+- \[ -n "${MORFEUSZ_VERSION##siat-*}" ] || url="http://sgjp.pl/morfeusz/morfeusz-siat/morfeusz-linux64-${MORFEUSZ_VERSION#siat-}.tar.bz2"
+- \[ -n "${MORFEUSZ_VERSION##sgjp-*}" ] || url="http://sgjp.pl/morfeusz/download/morfeusz-SGJP-linux64-${MORFEUSZ_VERSION#sgjp-}.tar.bz2"
+- wget "$url"
+- tar -xvf morfeusz-*.tar.bz2
 - LD_LIBRARY_PATH=$PWD python tests.py
 - LC_ALL=C python setup.py --version
 
