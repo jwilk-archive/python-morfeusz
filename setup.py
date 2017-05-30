@@ -61,7 +61,7 @@ class cmd_sdist(distutils_sdist):
         self.maybe_move_file(base_dir, 'LICENSE', 'doc/LICENSE')
 
 classifiers = '''
-Development Status :: 4 - Beta
+Development Status :: 7 - Inactive
 Intended Audience :: Developers
 License :: OSI Approved :: MIT License
 Natural Language :: Polish
