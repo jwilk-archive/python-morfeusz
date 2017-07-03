@@ -1,4 +1,4 @@
-python-morfeusz (0.3400) UNRELEASED; urgency=low
+python-morfeusz (0.3400) unstable; urgency=low
 
   * Deprecate the package.
     Document that Morfeusz 2 is not supported.
@@ -11,7 +11,7 @@ python-morfeusz (0.3400) UNRELEASED; urgency=low
   * Put license into a separate file.
   * Update the package description.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 31 Mar 2017 15:40:47 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 03 Jul 2017 20:22:59 +0200
 
 python-morfeusz (0.3300) unstable; urgency=low
 
